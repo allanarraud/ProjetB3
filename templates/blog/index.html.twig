@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+<section class="evenements">
+{% for evenement  in evenements %}
+    <evenement>
+        <h2>{{evenement.titre}}</h2>
+        <div class="metadata"> ecrit le {{ evenement.dateCreation | date
+        ('d/m/Y') }}  a {{ evenement.dateCreation | date('H:i')}}
+        dans la categorie politique
+        </div>
+        <div class="contenu">
+           <iframe width="560" height="315" src="{{evenement.video}}" alt=""> </iframe>
+            {{evenement.contenu | raw }}
+            <a href="{{path('blog_show', {id: evenement.id})}}" class="btn 
+            btn-primary">Lire la suite</a>
+        </div>
+    </evenement>
+     {% endfor %}
+</section>
+
+{% endblock %}
