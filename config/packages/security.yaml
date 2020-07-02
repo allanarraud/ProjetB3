@@ -1,7 +1,10 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        my_provider:
+            entity:
+                class: App\Entity\Compte
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -9,7 +12,19 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
+            provider: my_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: logout
+                target: blog
+                # where to redirect after logout
+                # target: app_any_route
+
+    encoders:
+        App\Entity\Compte: 
+            algorithm: md5
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -20,5 +35,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+
+<div class="example-wrapper">
+<h1>S'inscrire</h1>
+
+<div class="row">
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+        <div class="section">
+            <h5>Général</h5>
+            <br>
+            <div class="row">
+                <div class="col s12">{{ form_row(form.username)}}</div>
+            </div>
+            <div class="row">
+                <div class="col s12">{{ form_row(form.email)}}</div>
+            </div>
+            <div class="row">
+                <div class="col s12">{{ form_row(form.password)}}</div>
+            </div>
+    </div>
+
+<br>
+
+<div class="divider"></div>
+        <div class="section">
+            <h5>Informations personnelles</h5>
+            <br>
+            <div class="row">
+                <div class="col s12">{{ form_row(form.nom)}}</div>
+            </div>
+            <div class="row">
+                <div class="col s12">{{ form_row(form.prenom)}}</div>
+            </div>
+        </div>
+
+    {{ form_row(form.submit, {label : 'Créer un compte'}) }}
+{{ form_end(form) }}
+</div>
+</div>
+{% endblock %}
