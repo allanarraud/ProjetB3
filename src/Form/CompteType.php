@@ -4,13 +4,13 @@ namespace App\Form;
 
 use App\Entity\Compte;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompteType extends AbstractType
 {
@@ -21,16 +21,16 @@ class CompteType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'label' => 'Mot de passe',
                 'type' => PasswordType::class,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot de passe'],])
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer le mot de passe']])
             ->add('email', EmailType::class, ['label' => 'Adresse mail'])
-            ->add('nom', TextType::class, ['label' => 'Nom'])
-            ->add('prenom', TextType::class, ['label' => 'Prénom'])
+            ->add('nom', TextType::class, ['label' => 'Nom', 'required' => false])
+            ->add('prenom', TextType::class, ['label' => 'Prénom', 'required' => false])
             ->add('submit', SubmitType::class, [
                 'label' => 'S\'inscrire',
                 'attr' => [
-                    'class' => 'btn btn-success pull-right'
-                ]
+                    'class' => 'btn btn-success pull-right',
+                ],
             ]);
     }
 

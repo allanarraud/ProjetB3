@@ -38,6 +38,9 @@
 						<a class="nav-link" href="{{ path("register") }}">S'inscrire</a>
 					{% endif %}
 					{% if app.user %}
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="nav-link" href="{{ path("admin") }}">Administration</a>
+						{% endif %}
 						<a class="nav-link" href="#">{{ app.user.username }}</a>
 						<a class="nav-link" href="{{ path("logout") }}">Se déconnecter</a>
 					{% endif %}
