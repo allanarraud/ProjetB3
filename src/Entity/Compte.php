@@ -116,7 +116,7 @@ class Compte implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_ADMIN');
+        return array($this->roles);
     }
 
     public function setRoles(string $roles)
