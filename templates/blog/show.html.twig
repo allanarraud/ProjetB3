@@ -6,12 +6,36 @@
         <h2>{{evenement.titre}}</h2>
         <div class="metadata"> ecrit  {{ evenement.dateCreation | date
         ('d/m/Y') }}  a {{ evenement.dateCreation | date('H:i')}}
-        dans la categorie politique
+        dans la categorie {{evenement.categories.nom}} 
         </div>
         <div class="contenu">
           <iframe width="560" height="315" src="{{evenement.video}}" alt=""></iframe>
            {{evenement.contenu |raw }}
         </div>
     </evenement>
+
+    <section id="commentaires">
+    <h1> {{evenement.commentaires | length}} commentaires :</h1>
+    {%for commentaires in evenement.commentaires%}
+    <div class="commentaire">
+      <div class="row">
+        <div class ="col-3">
+          {{commentaires.email}}(<small>{{commentaires.dateCommentaire | date
+        ('d/m/Y a H:i')}}</small>)
+      </div>
+       <div class="col">
+        {{commentaires.contenu | raw}}
+        </div>
+        </div>
+        </div>
+        {%endfor%}
+    {{form_start(formCommentaire)}}
+    {{form_row(formCommentaire.email,{'attr':{'placeholder':"Votre email"}})}} 
+    {{form_row(formCommentaire.pseudo,{'attr':{'placeholder':"Votre pseudo"}})}} 
+    {{form_row(formCommentaire.contenu,{'attr':{'placeholder':"Votre commentaire"}})}} 
+    <button type="submit" class="btn btn-success"> COMMENTER
+    </button>
+    {{form_end(formCommentaire)}}
+
     </section>
 {% endblock %}
