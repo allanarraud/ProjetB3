@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription
+{% block title %}
+	{{ titre }}
 {% endblock %}
 
 {% block body %}
@@ -27,34 +28,33 @@
 			text-align: center;
 			margin-top: 10px;
 		}
+		.choix_utilisateur{
+			color: blue;
+		}
+		.choix_admin{
+			background-color: red;
+			color: white;
+		}
+		.choix_banni{
+			background-color: #252525;
+			color: white;
+		}
 	</style>
 
-
 	<div class="main-wrapper">
-		<h1>S'inscrire</h1>
-		<br>
-
+		<h1>{{ titre }}</h1>
 		{{ form_start(form) }}
-		{{ form_errors(form) }}
-
-		<div class="section">
-			<h3>Général</h3>
-			{{ form_row(form.username)}}
-			{{ form_row(form.email)}}
-			{{ form_row(form.password)}}
-		</div>
-
 		<br>
-		<hr>
-		<br>
-
-		<div class="section">
-			<h3>Informations personnelles</h3>
-			{{ form_row(form.nom, {required : false}) }}
-			{{ form_row(form.prenom, {required : false}) }}
-		</div>
-
-		{{ form_row(form.inscription, {label : 'Créer un compte'}) }}
+		{{ form_row(form.nom) }}
+		{{ form_row(form.prenom) }}
+		{{ form_row(form.username) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.roles) }}
+		{{ form_row(form.modifier, {class : 'btn btn-success'}) }}
 		{{ form_end(form) }}
+
+		<form action="{{ path("liste_comptes") }}">
+			<button class="btn btn-secondary">Annuler</button>
+		</form>
 	</div>
 {% endblock %}

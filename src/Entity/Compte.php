@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CompteRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Asset\Exception\InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -30,12 +30,13 @@ class Compte implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -48,6 +49,11 @@ class Compte implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $roles;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $banni = false;
 
     public function getId(): ?int
     {
@@ -124,6 +130,18 @@ class Compte implements UserInterface
         $this->roles = $roles;
     }
 
+    public function getBanni(): ?bool
+    {
+        return $this->banni;
+    }
+
+    public function setBanni(bool $banni): self
+    {
+        $this->banni = $banni;
+
+        return $this;
+    }
+
     public function getSalt()
     {
 
@@ -133,4 +151,6 @@ class Compte implements UserInterface
     {
 
     }
+
+    
 }

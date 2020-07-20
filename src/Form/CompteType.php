@@ -17,21 +17,17 @@ class CompteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, ['label' => 'Nom d\'utilisateur'])
-            ->add('password', RepeatedType::class, [
-                'label' => 'Mot de passe',
+            ->add('nom', TextType::class, array('label' => 'Nom (optionnel)'))
+            ->add('prenom', TextType::class, array('label' => 'Prénom (optionnel)'))
+            ->add('username', TextType::class, array('label' => 'Nom d\'utilisateur'))
+            ->add('email', EmailType::class)
+            ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot de passe']])
-            ->add('email', EmailType::class, ['label' => 'Adresse mail'])
-            ->add('nom', TextType::class, ['label' => 'Nom', 'required' => false])
-            ->add('prenom', TextType::class, ['label' => 'Prénom', 'required' => false])
-            ->add('submit', SubmitType::class, [
-                'label' => 'S\'inscrire',
-                'attr' => [
-                    'class' => 'btn btn-success pull-right',
-                ],
-            ]);
+                'first_options' => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Confirmation du mot de passe'),
+            ))
+            ->add('inscription', SubmitType::class, array('label' => 'Créer un compte', 'attr' => ['class' => 'btn btn-success']));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
