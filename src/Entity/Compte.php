@@ -4,11 +4,22 @@ namespace App\Entity;
 
 use App\Repository\CompteRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CompteRepository::class)
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     errorPath="username",
+ *     message="Ce nom d'utilisateur est déjà utilisé."
+ * )
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     errorPath="email",
+ *     message="Cette adresse email est déjà utilisée."
+ * )
  */
 class Compte implements UserInterface
 {
@@ -152,5 +163,4 @@ class Compte implements UserInterface
 
     }
 
-    
 }

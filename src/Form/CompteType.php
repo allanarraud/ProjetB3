@@ -4,13 +4,14 @@ namespace App\Form;
 
 use App\Entity\Compte;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompteType extends AbstractType
 {
@@ -25,6 +26,7 @@ class CompteType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Confirmation du mot de passe'),
+                'constraints' => array(new Length(['min' => 6, 'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères.'])),
             ))
             ->add('inscription', SubmitType::class, array('label' => 'Créer un compte', 'attr' => ['class' => 'btn btn-success']));
 

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		<h1>Erreur 403</h1>
+        <h3>Accès refusé</h3>
+
+		<p>
+			Il semblerait que vous n'ayez pas l'autorisation d'accéder à cet endroit
+			<i class="material-icons">sentiment_dissatisfied</i>
+			<br>
+			<a href="{{ path('blog') }}">Retourner à l'accueil</a>.
+		</p>
+	</div>
+{% endblock %}
