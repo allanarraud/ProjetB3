@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		<h1>Erreur 404</h1>
+        <h3>Page non trouvée</h3>
+
+		<p>
+			Oups... La page n'a pas été trouvée ou n'existe pas. </br>
+            Les aléas du direct vous savez...
+			<i class="material-icons">sentiment_satisfied</i>
+			<br>
+			<a href="{{ path('blog') }}">Retourner à l'accueil</a>.
+		</p>
+	</div>
+{% endblock %}

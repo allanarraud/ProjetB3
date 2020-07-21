@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration
+{% endblock %}
+
+{% block body %}
+<style>
+	.main-wrapper {
+		margin: 1em auto;
+		max-width: 800px;
+		width: 95%;
+		font: 18px / 1.5 sans-serif;
+	}
+	table,
+	td {
+		border: 1px solid #252525;
+	}
+
+	thead,
+	tfoot {
+		background-color: #252525;
+		color: #fff;
+	}
+</style>
+
+<div class="main-wrapper">
+	<h1>
+		<i class="material-icons">people</i>Liste des comptes utilisateurs</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Nom d'utilisateur</th>
+				<th>Adresse</th>
+				<th>Rôle</th>
+				<th>Etat</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for compte in lesComptes %}
+				<tr>
+					<td>
+						<i class="material-icons">person</i>
+						{{ compte.id }}</td>
+					{% if compte.nom != null %}
+						<td>{{ compte.nom }}</td>
+					{% elseif compte.nom == null %}
+						<td>
+							<i>Non renseigné</i>
+						</td>
+					{% endif %}
+					{% if compte.prenom != null %}
+						<td>{{ compte.prenom }}</td>
+					{% elseif compte.prenom == null %}
+						<td>
+							<i>Non renseigné</i>
+						</td>
+					{% endif %}
+					<td>{{ compte.username }}</td>
+					<td>{{ compte.email }}</td>
+					<td>
+						{% for role in compte.roles %}
+							{{ role }}
+						{% endfor %}
+					</td>
+					<td>
+						{% if compte.banni %}
+							<p style="color:crimson;">Banni</p>
+						{% elseif not compte.banni %}
+							<p style="color:green;">Non banni</p>
+						{% endif %}
+					</td>
+					<td>
+						<a class="btn-floating btn-small waves-effect waves-light pink" href="{{ path("compte_modifier",{"id_compte":compte.id}) }}">
+							<i class="material-icons" title="Modifier">create</i>
+						</a>
+						<a class="btn-floating btn-small waves-effect waves-light red" href="{{ path("compte_supprimer",{"id_compte":compte.id}) }}">
+							<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
+						</a>
+						{% if compte.banni %}
+							<a class="btn-floating btn-small waves-effect waves-light red" href="{{ path("compte_debannir",{"id_compte":compte.id}) }}">
+								<i class="material-icons" style="color:#252525;" title="Débannir">radio_button_unchecked</i>
+							</a>
+						{% elseif not compte.banni %}
+							<a class="btn-floating btn-small waves-effect waves-light red" href="{{ path("compte_bannir",{"id_compte":compte.id}) }}">
+								<i class="material-icons" style="color:#252525;" title="Bannir">not_interested</i>
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			</td>
+		</tbody>
+	</tr>
+</td></tbody></tr>{% endfor %}</tbody></table></div>{% endblock %}
