@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -65,6 +67,16 @@ class Compte implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $banni = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Evenements::class, mappedBy="compte")
+     */
+    private $evenements;
+
+    public function __construct()
+    {
+        $this->evenements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -161,6 +173,37 @@ class Compte implements UserInterface
     public function eraseCredentials()
     {
 
+    }
+
+    /**
+     * @return Collection|Evenements[]
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenements $evenement): self
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements[] = $evenement;
+            $evenement->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenements $evenement): self
+    {
+        if ($this->evenements->contains($evenement)) {
+            $this->evenements->removeElement($evenement);
+            // set the owning side to null (unless already changed)
+            if ($evenement->getCompte() === $this) {
+                $evenement->setCompte(null);
+            }
+        }
+
+        return $this;
     }
 
 }

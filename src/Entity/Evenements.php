@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\EvenementsRepository;
+use App\Entity\Compte;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EvenementsRepository;
 
 /**
  * @ORM\Entity(repositoryClass=EvenementsRepository::class)
@@ -36,6 +37,17 @@ class Evenements
      * @ORM\Column(type="datetime")
      */
     private $dateCreation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Compte::class, inversedBy="evenements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compte;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateDebut;
 
     public function getId(): ?int
     {
@@ -86,6 +98,30 @@ class Evenements
     public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    public function getCompte(): ?Compte
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?Compte $compte): self
+    {
+        $this->compte = $compte;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
