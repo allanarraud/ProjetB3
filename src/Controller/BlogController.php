@@ -3,12 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Evenements;
-use App\Form\EvenementType;
+use App\Entity\Commentaires;
 use App\Repository\EvenementsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Form\EvenementType;
+use App\Form\CommentaireType;
+class BlogController extends AbstractController
 
 class BlogController extends AbstractController
 {
@@ -74,11 +81,28 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/{id}", name="blog_show")
      */
-    public function show(EvenementsRepository $repo, $id)
-    {
+    public function show(Evenements $evenement,EvenementsRepository $repo, $id,Request $request){
+        $manager = $this->getDoctrine()->getManager();
+        $commentaire=new Commentaires();
+        $form=$this->createForm(CommentaireType::class,$commentaire);
 
-        $evenement = $repo->find($id);
+        $form->handleRequest($request);
 
+        if($form->isSubmitted()&& $form->isValid()){
+            $commentaire->setDateCommentaire(new \DateTime())
+                        ->setEvenements($evenement);
+            $manager->persist($commentaire);
+            $manager->flush();
+            return $this->redirectToRoute('blog_show',['id'=>$evenement->getId
+            ()]);
+}
+        $evenement=$repo->find($id);
+
+        return $this->render('blog/show.html.twig',[
+            'evenement'=>$evenement,
+            'formCommentaire'=> $form->createView()
+        ]);  
+    }
         return $this->render('blog/show.html.twig', [
             'evenement' => $evenement,
         ]);

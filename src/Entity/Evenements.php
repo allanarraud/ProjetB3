@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Compte;
+
+use App\Repository\EvenementsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EvenementsRepository;
 
@@ -39,15 +42,20 @@ class Evenements
     private $dateCreation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Compte::class, inversedBy="evenements")
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="Evenements")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $compte;
+    private $categories;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="Evenements", orphanRemoval=true)
      */
-    private $dateDebut;
+    private $commentaires;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -101,19 +109,23 @@ class Evenements
 
         return $this;
     }
-
     public function getCompte(): ?Compte
     {
         return $this->compte;
     }
-
     public function setCompte(?Compte $compte): self
     {
         $this->compte = $compte;
 
+    public function getCategories(): ?Categories
+    {
+        return $this->categories;
+    }
+    public function setCategories(?Categories $categories): self
+    {
+        $this->categories = $categories;
         return $this;
     }
-
     public function getDateDebut(): ?\DateTimeInterface
     {
         return $this->dateDebut;
@@ -122,7 +134,33 @@ class Evenements
     public function setDateDebut(\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
+    /**
+     * @return Collection|Commentaires[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
 
+    public function addCommentaire(Commentaires $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setEvenements($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getEvenements() === $this) {
+                $commentaire->setEvenements(null);
+            }
+        }
         return $this;
     }
 }
