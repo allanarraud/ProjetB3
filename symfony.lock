@@ -1,4 +1,7 @@
 {
+    "composer/package-versions-deprecated": {
+        "version": "1.10.99"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -109,7 +112,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.1.0"

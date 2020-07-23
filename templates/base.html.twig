@@ -15,22 +15,32 @@
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
-			<div class="collapse navbar-collapse" id="navbarColor02">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item ">
-						<a class="nav-link" href="/">ACCUEIL
-							<span class="sr-only">(current)</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{path('liste_evenements')}}">EVENEMENTS</a>
-					</li>
-					<li class="nav-item">
-						{% if app.user %}
-							<a class="nav-link" href="{{path('evenement_ajouter')}}">CREER EVENEMENT</a>
-						{% elseif not app.user %}
-							<a class="nav-link" href="{{path('login')}}">CREER EVENEMENT</a>
+				<div class="collapse navbar-collapse" id="navbarColor02">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item ">
+							<a class="nav-link" href="/">ACCUEIL
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('blog')}}">EVENEMENTS</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('blog_create')}}">CREER EVENEMENT</a>
+						</li>
+					</ul>
+					<form class="form-inline my-2 my-lg-0">
+						<input class="form-control mr-sm-2" type="text" placeholder="Search">
+						<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+						<button class="nav-link" href="CGU.html.twig">CGU</button>
+					</form>
+					{% if not app.user %}
+						<a class="nav-link" href="{{ path("login") }}">Se Connecter</a>
+						<a class="nav-link" href="{{ path("register") }}">S'inscrire</a>
+					{% endif %}
+					{% if app.user %}
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="nav-link" href="{{ path("admin") }}">Administration</a>
 						{% endif %}
 					</li>
 				</ul>
