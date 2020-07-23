@@ -26,7 +26,6 @@ class CompteModificationType extends AbstractType
                     'choices' => [
                         'Utilisateur' => 'ROLE_USER',
                         'Admin' => 'ROLE_ADMIN',
-                        'Banni' => 'ROLE_BANNED',
                     ],
                     'choice_attr' => function ($choice, $key, $value) {
                         // Attribue une classe "choix_nomDuChoix" comme "choix_utilisateur" pour chaque élément de la liste déroulante.
