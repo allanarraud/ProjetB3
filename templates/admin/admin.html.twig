@@ -40,10 +40,9 @@
 
 	<div class="main-wrapper">
 		<h1>Panneau d'administration</h1>
-
-		<a class="comptesBtn" href="{{ path("liste_comptes") }}" role="button">
-			<i class="material-icons">person</i>Comptes</a>
-		<a class="comptesBtn" href="{{ path("liste_comptes") }}">
-			<i class="material-icons" role="button">videocam</i>Évènements</a>
+		<br>
+		<form action="{{ path("liste_comptes") }}">
+			<button class="btn btn-primary"><i class="material-icons">person</i> Comptes</button>
+		</form>
 	</div>
 {% endblock %}

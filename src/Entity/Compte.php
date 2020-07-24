@@ -73,9 +73,15 @@ class Compte implements UserInterface
      */
     private $evenements;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="compte")
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +206,37 @@ class Compte implements UserInterface
             // set the owning side to null (unless already changed)
             if ($evenement->getCompte() === $this) {
                 $evenement->setCompte(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaires[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getCompte() === $this) {
+                $commentaire->setCompte(null);
             }
         }
 

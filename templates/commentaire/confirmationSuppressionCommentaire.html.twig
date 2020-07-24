@@ -22,9 +22,13 @@
 
 	<div class="main-wrapper">
 		{% if app.user %}
-			{% if app.user == evenement.compte or is_granted('ROLE_ADMIN') %}
+			{% if app.user == commentaire.compte or is_granted('ROLE_ADMIN') %}
 				<h1>{{ titre }}</h1>
-				<h5>Voulez-vous vraiment supprimer cet événement ?</h2>
+				<h5>Voulez-vous vraiment supprimer ce commentaire ?</h2>
+				<br>
+				<p>"
+					{{ commentaire.contenu }}
+					"</p>
 				<br>
 				{{ form_start(form) }}
 				{{ form_row(form.supprimer, {class : 'btn btn-danger'}) }}
@@ -33,7 +37,7 @@
 				<form action="{{ path("liste_evenements") }}">
 					<button class="btn btn-secondary">Annuler</button>
 				</form>
-			{% elseif app.user != evenement.compte %}
+			{% elseif app.user != commentaire.compte %}
 				<h1>Erreur 403</h1>
 				<h3>Accès refusé</h3>
 

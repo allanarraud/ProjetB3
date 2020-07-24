@@ -6,17 +6,14 @@ use App\Entity\Commentaires;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class CommentaireType extends AbstractType
+class ConfirmationSuppressionCommentaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('pseudo')
-            ->add('contenu')
-           
-        ;
+            ->add('supprimer', SubmitType::class, array('label' => 'Supprimer', "attr" => ["class" => "btn btn-danger"]));
     }
 
     public function configureOptions(OptionsResolver $resolver)

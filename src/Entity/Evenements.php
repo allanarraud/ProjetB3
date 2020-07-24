@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EvenementsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use App\Entity\Compte;
+use App\Entity\Categories;
+use App\Entity\Commentaires;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EvenementsRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=EvenementsRepository::class)
@@ -52,10 +53,7 @@ class Evenements
      */
     private $commentaires;
 
-    public function __construct()
-    {
-        $this->commentaires = new ArrayCollection();
-    }
+    /**
      * @ORM\ManyToOne(targetEntity=Compte::class, inversedBy="evenements")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -65,6 +63,11 @@ class Evenements
      * @ORM\Column(type="datetime")
      */
     private $dateDebut;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,7 +118,6 @@ class Evenements
     public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
-
         return $this;
     }
 
@@ -127,8 +129,9 @@ class Evenements
     public function setCategories(?Categories $categories): self
     {
         $this->categories = $categories;
+        return $this;
     }
-  
+
     public function getCompte(): ?Compte
     {
         return $this->compte;
@@ -168,7 +171,7 @@ class Evenements
             }
         }
     }
-  
+
     public function getDateDebut(): ?\DateTimeInterface
     {
         return $this->dateDebut;

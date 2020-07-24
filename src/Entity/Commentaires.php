@@ -23,26 +23,6 @@ class Commentaires
     private $contenu;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $pseudo;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $rgpd =true;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $actif=true;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $dateCommentaire;
@@ -52,6 +32,12 @@ class Commentaires
      * @ORM\JoinColumn(nullable=false)
      */
     private $Evenements;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Compte::class, inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compte;
 
     public function getId(): ?int
     {
@@ -66,54 +52,6 @@ class Commentaires
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getRgpd(): ?bool
-    {
-        return $this->rgpd;
-    }
-
-    public function setRgpd(bool $rgpd): self
-    {
-        $this->rgpd = $rgpd;
-
-        return $this;
-    }
-
-    public function getActif(): ?bool
-    {
-        return $this->actif;
-    }
-
-    public function setActif(bool $actif): self
-    {
-        $this->actif = $actif;
 
         return $this;
     }
@@ -138,6 +76,18 @@ class Commentaires
     public function setEvenements(?Evenements $Evenements): self
     {
         $this->Evenements = $Evenements;
+
+        return $this;
+    }
+
+    public function getCompte(): ?Compte
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?Compte $compte): self
+    {
+        $this->compte = $compte;
 
         return $this;
     }
