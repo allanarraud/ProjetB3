@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ titre }}
+{% endblock %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper label {
+			margin: 0;
+			padding: 0;
+		}
+		.main-wrapper input {
+			width: 100%;
+			clear: both;
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+		.main-wrapper button {
+			width: 100%;
+			clear: both;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.choix_utilisateur{
+			color: blue;
+		}
+		.choix_admin{
+			background-color: red;
+			color: white;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		<h1>{{ titre }}</h1>
+		{{ form_start(form) }}
+		<br>
+		{{ form_row(form.nom) }}
+		{{ form_row(form.prenom) }}
+		{{ form_row(form.username) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.roles) }}
+		{{ form_row(form.modifier, {class : 'btn btn-success'}) }}
+		{{ form_end(form) }}
+
+		<form action="{{ path("liste_comptes") }}">
+			<button class="btn btn-secondary">Annuler</button>
+		</form>
+	</div>
+{% endblock %}

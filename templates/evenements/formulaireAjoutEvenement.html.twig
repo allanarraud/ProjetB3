@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ titre }}
+{% endblock %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper label {
+			margin: 0;
+			padding: 0;
+		}
+		.main-wrapper input {
+			width: 100%;
+			clear: both;
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+		.main-wrapper button {
+			width: 100%;
+			clear: both;
+			text-align: center;
+			margin-top: 10px;
+		}
+	</style>
+
+	<div class="main-wrapper">
+
+		{% if app.user %}
+			<h1>{{ titre }}</h1>
+			{{ form_start(form) }}
+			<br>
+			{{ form_row(form.titre) }}
+			{{ form_label(form.contenu) }}
+			{{ form_errors(form.contenu) }}
+			<br>
+			{{ form_widget(form.contenu) }}
+			{{ form_row(form.video) }}
+			{{ form_row(form.dateDebut) }}
+			{{ form_row(form.valider) }}
+			{{ form_end(form) }}
+
+
+			<form action="{{ path("liste_evenements") }}">
+				<button class="btn btn-secondary">Annuler</button>
+			</form>
+		</a>
+	</h2>
+{% elseif not app.user %}
+	<h4>Vous devez être connecté pour poster un évènement.</h4>
+	<br>
+
+	<p>
+		<a href="{{ path('login') }}">Se connecter</a>
+		ou
+		<a href="{{ path('register') }}">S'inscrire</a>
+	</p>
+
+{% endif %}</div>{% endblock %}

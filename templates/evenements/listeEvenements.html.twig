@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des évènements
+{% endblock %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper p {
+			margin: 0;
+			padding: 0;
+		}
+		.evenement {
+			border: 1px solid black;
+			border-radius: 5px;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+			-webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			-moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			width: 100%;
+			max-width: 100%;
+			margin-bottom: 20px;
+		}
+		.evenement h2 {
+			margin-left: 10px;
+			margin-top: 10px;
+		}
+		.evenement p,
+		.evenement iframe {
+			margin-left: 10px;
+			margin-right: 10px;
+			border-style: none;
+			word-wrap: break-word;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3; /* number of lines to show */
+			-webkit-box-orient: vertical;
+		}
+		#organisateurEvenement {
+			position: relative;
+			right: 0;
+		}
+		.evenement a {
+			width: 100%;
+			max-width: 100%;
+			clear: both;
+			text-align: center;
+			margin: 0;
+			border-radius: 0;
+		}
+		.contenu p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-size: 90%;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		{% for evenement  in lesEvenements %}
+			<div class="evenement">
+				{% if app.user == evenement.compte or is_granted('ROLE_ADMIN') %}
+					<h2>{{evenement.titre}}
+						<a href="{{ path("evenement_modifier",{"id_evenement":evenement.id}) }}">
+							<i class="material-icons" title="Modifier">create</i>
+						</a>
+						<a href="{{ path("evenement_supprimer",{"id_evenement":evenement.id}) }}">
+							<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
+						</a>
+					</h2>
+				{% elseif app.user != evenement.compte %}
+					<h2>{{evenement.titre}}
+					</h2>
+				{% endif %}
+				<hr>
+				<p id="organisateurEvenement">
+					<i class="material-icons">person</i>Auteur:
+					{{ evenement.compte.username }}</p>
+				<p>
+					<i class="material-icons">add_to_queue</i>
+					Ajouté le
+					{{ evenement.dateCreation | date('d/m/Y') }}
+					à
+					{{ evenement.dateCreation | date('H:i')}}
+					dans la categorie politique.
+				</p>
+				<p>
+					<i class="material-icons" style="color:crimson;">fiber_manual_record</i>
+					En direct le
+					{{ evenement.dateDebut | date('d/m/Y') }}
+					à
+					{{ evenement.dateDebut | date('H:i')}}.
+				</p>
+				<div class="contenu">
+					<iframe width="560" height="315" src="{{evenement.video}}" alt=""></iframe>
+					<p>{{evenement.contenu | raw }}</p>
+					<a href="{{path('evenement_details', {id_evenement: evenement.id})}}" class="btn btn-primary">Lire la suite</a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

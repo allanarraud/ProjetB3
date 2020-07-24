@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ titre }}
+{% endblock %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper button {
+			width: 100%;
+			clear: both;
+			text-align: center;
+			margin-top: 10px;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		<h1>{{ titre }}</h1>
+		<h5>Voulez-vous vraiment {{ action|lower }} ce compte ?</h2>
+		<br>
+		{{ form_start(form) }}
+		{{ form_row(form.bannir, {class : 'btn btn-danger', label :  action}) }}
+		{{ form_end(form) }}
+
+		<form action="{{ path("liste_comptes") }}">
+			<button class="btn btn-secondary">Annuler</button>
+		</form>
+	</div>
+{% endblock %}

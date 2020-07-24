@@ -1,51 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
-<style>
-    .main-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .main-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper label {
+			margin: 0;
+			padding: 0;
+		}
+		.main-wrapper input {
+			width: 100%;
+			clear: both;
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+		.main-wrapper button {
+			width: 100%;
+			clear: both;
+			text-align: center;
+			margin-top: 10px;
+		}
+	</style>
 
 
-<div class="main-wrapper">
-<h1>S'inscrire</h1>
+	<div class="main-wrapper">
+		<h1>S'inscrire</h1>
+		<br>
 
-<div class="row">
-{{ form_start(form) }}
-    {{ form_errors(form) }}
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
 
-        <div class="section">
-            <h5>Général</h5>
-            <br>
-            <div class="row">
-                <div class="col s12">{{ form_row(form.username)}}</div>
-            </div>
-            <div class="row">
-                <div class="col s12">{{ form_row(form.email)}}</div>
-            </div>
-            <div class="row">
-                <div class="col s12">{{ form_row(form.password)}}</div>
-            </div>
-    </div>
+		<div class="section">
+			<h3>Général</h3>
+			{{ form_label(form.username)}}
+			{{ form_errors(form.username) }}
+			{{ form_widget(form.username) }}
 
-<br>
+			{{ form_label(form.email)}}
+			{{ form_errors(form.email) }}
+			{{ form_widget(form.email) }}
+			
+			{{ form_errors(form.password) }}
+			{{ form_widget(form.password) }}
+		</div>
 
-<div class="divider"></div>
-        <div class="section">
-            <h5>Informations personnelles</h5>
-            <br>
-            <div class="row">
-                <div class="col s12">{{ form_row(form.nom)}}</div>
-            </div>
-            <div class="row">
-                <div class="col s12">{{ form_row(form.prenom)}}</div>
-            </div>
-        </div>
+		<br>
+		<hr>
+		<br>
 
-    {{ form_row(form.submit, {label : 'Créer un compte'}) }}
-{{ form_end(form) }}
-</div>
-</div>
+		<div class="section">
+			<h3>Informations personnelles</h3>
+			{{ form_row(form.nom, {required : false}) }}
+			{{ form_row(form.prenom, {required : false}) }}
+		</div>
+
+		{{ form_row(form.inscription, {label : 'Créer un compte'}) }}
+		{{ form_end(form) }}
+	</div>
 {% endblock %}
