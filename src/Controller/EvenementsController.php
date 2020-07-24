@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\Evenements;
-use App\Form\EvenementType;
 use App\Entity\Commentaires;
+use App\Entity\Evenements;
 use App\Form\CommentairesType;
+use App\Form\ConfirmationSuppressionEvenementType;
+use App\Form\EvenementType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\ConfirmationSuppressionEvenementType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EvenementsController extends AbstractController
 {
+    /**
+     * @Route("/", name="accueil")
+     */
+    public function accueil()
+    {
+        return $this->render('evenements/accueil.html.twig');
+    }
+
     /**
      * @Route("/evenements", name="liste_evenements")
      */
