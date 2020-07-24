@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\EvenementType;
 use App\Form\CommentaireType;
-class BlogController extends AbstractController
 
 class BlogController extends AbstractController
 {
@@ -101,10 +100,6 @@ class BlogController extends AbstractController
         return $this->render('blog/show.html.twig',[
             'evenement'=>$evenement,
             'formCommentaire'=> $form->createView()
-        ]);  
-    }
-        return $this->render('blog/show.html.twig', [
-            'evenement' => $evenement,
         ]);
     }
 
