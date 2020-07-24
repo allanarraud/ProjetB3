@@ -96,6 +96,9 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
+    },
     "monolog/monolog": {
         "version": "2.1.0"
     },
@@ -524,6 +527,9 @@
     },
     "symfony/yaml": {
         "version": "v5.1.0"
+    },
+    "twbs/bootstrap": {
+        "version": "v4.5.0"
     },
     "twig/extra-bundle": {
         "version": "v3.0.3"

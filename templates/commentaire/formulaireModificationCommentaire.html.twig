@@ -33,31 +33,30 @@
 	<div class="main-wrapper">
 
 		{% if app.user %}
-			<h1>{{ titre }}</h1>
-			{{ form_start(form) }}
-			<br>
-			{{ form_row(form.titre) }}
-			{{ form_label(form.contenu) }}
-			{{ form_errors(form.contenu) }}
-			<br>
-			{{ form_widget(form.contenu) }}
-			{{ form_row(form.video) }}
-			<br>
-			{{ form_row(form.dateDebut) }}
-			<br>
-			{{ form_label(form.categories) }}
-			{{ form_errors(form.categories) }}
-			<br>
-			{{ form_widget(form.categories) }}
-			{{ form_row(form.valider) }}
-			{{ form_end(form) }}
+			{% if app.user == commentaire.compte or is_granted('ROLE_ADMIN') %}
+				<h1>{{ titre }}</h1>
+				{{ form_start(form) }}
+				{{ form_row(form.contenu) }}
+				{{ form_row(form.envoyer, {label : 'Modifier le commentaire'}) }}
+				{{ form_end(form) }}
 
 
-			<form action="{{ path("liste_evenements") }}">
-				<button class="btn btn-secondary">Annuler</button>
-			</form>
-		</a>
-	</h2>
+				<form action="{{ path("liste_evenements") }}">
+					<button class="btn btn-secondary">Annuler</button>
+				</form>
+			</a>
+		</h2>
+	{% elseif app.user != commentaire.compte %}
+		<h1>Erreur 403</h1>
+		<h3>Accès refusé</h3>
+
+		<p>
+			Il semblerait que vous n'ayez pas l'autorisation d'accéder à cet endroit
+			<i class="material-icons">sentiment_dissatisfied</i>
+			<br>
+			<a href="{{ path('accueil') }}">Retourner à l'accueil</a>.
+		</p>
+	{% endif %}
 {% elseif not app.user %}
 	<h4>Vous devez être connecté pour poster un évènement.</h4>
 	<br>

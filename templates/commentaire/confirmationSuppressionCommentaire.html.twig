@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ titre }}
+{% endblock %}
+
+{% block body %}
+	<style>
+		.main-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.main-wrapper button {
+			width: 100%;
+			clear: both;
+			text-align: center;
+			margin-top: 10px;
+		}
+	</style>
+
+	<div class="main-wrapper">
+		{% if app.user %}
+			{% if app.user == commentaire.compte or is_granted('ROLE_ADMIN') %}
+				<h1>{{ titre }}</h1>
+				<h5>Voulez-vous vraiment supprimer ce commentaire ?</h2>
+				<br>
+				<p>"
+					{{ commentaire.contenu }}
+					"</p>
+				<br>
+				{{ form_start(form) }}
+				{{ form_row(form.supprimer, {class : 'btn btn-danger'}) }}
+				{{ form_end(form) }}
+
+				<form action="{{ path("liste_evenements") }}">
+					<button class="btn btn-secondary">Annuler</button>
+				</form>
+			{% elseif app.user != commentaire.compte %}
+				<h1>Erreur 403</h1>
+				<h3>Accès refusé</h3>
+
+				<p>
+					Il semblerait que vous n'ayez pas l'autorisation d'accéder à cet endroit
+					<i class="material-icons">sentiment_dissatisfied</i>
+					<br>
+					<a href="{{ path('accueil') }}">Retourner à l'accueil</a>.
+				</p>
+			{% endif %}
+		{% elseif not app.user %}
+			<h4>Vous devez être connecté pour poster un évènement.</h4>
+			<br>
+
+			<p>
+				<a href="{{ path('login') }}">Se connecter</a>
+				ou
+				<a href="{{ path('register') }}">S'inscrire</a>
+			</p>
+
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des évènements
+{% block title %}
+	{{ titre }}
 {% endblock %}
 
 {% block body %}
@@ -43,6 +44,22 @@
 			margin: 0;
 			border-radius: 0;
 		}
+		.contenu p {
+			margin: 10px;
+			font-size: 90%;
+		}
+		.commentaire {
+			border: 1px solid skyblue;
+			border-radius: 5px;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+			-webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			-moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			margin-top: 20px;
+		}
+		.commentaire p {
+			margin: 10px;
+		}
 	</style>
 
 	<div class="main-wrapper">
@@ -51,6 +68,9 @@
 				<h2>{{evenement.titre}}
 					<a href="{{ path("evenement_modifier",{"id_evenement":evenement.id}) }}">
 						<i class="material-icons" title="Modifier">create</i>
+					</a>
+					<a href="{{ path("evenement_supprimer",{"id_evenement":evenement.id}) }}">
+						<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
 					</a>
 				</h2>
 			{% elseif app.user != evenement.compte %}
@@ -67,7 +87,8 @@
 				{{ evenement.dateCreation | date('d/m/Y') }}
 				à
 				{{ evenement.dateCreation | date('H:i')}}
-				dans la categorie politique.
+				dans la categorie
+				{{ evenement.categories.nom }}.
 			</p>
 			<p>
 				<i class="material-icons" style="color:crimson;">fiber_manual_record</i>
@@ -81,5 +102,43 @@
 				<p>{{evenement.contenu | raw }}</p>
 			</div>
 		</div>
+		<br>
+		<div class="commentaires">
+			<h3>Commentaires</h3>
+			<hr>
+			{% for commentaire  in lesCommentaires %}
+				<div class="commentaire">
+					<p>
+						<i class="material-icons">person</i>
+						{{commentaire.compte.username}}
+						(<small>{{commentaire.dateCommentaire | date('d/m/Y a H:i')}}</small>)
+						{% if app.user == commentaire.compte or is_granted('ROLE_ADMIN') %}
+							<a href="{{ path("commentaire_modifier",{"id_commentaire":commentaire.id}) }}">
+								<i class="material-icons" title="Modifier">create</i>
+							</a>
+							<a href="{{ path("commentaire_supprimer",{"id_commentaire":commentaire.id}) }}">
+								<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
+							</a>
+						{% endif %}
+					</p>
+					<p>{{commentaire.contenu | raw}}</p>
+				</div>
+			{% endfor %}
+			<br>
+			{% if not app.user %}
+				<p>Vous devez être connecté pour poster un commentaire.</p>
+				<br>
+				<p>
+					<a href="{{ path('login') }}">Se connecter</a>
+					ou
+					<a href="{{ path('register') }}">S'inscrire</a>
+				</p>
+			{% elseif app.user %}
+				{{ form_start(form) }}
+				{{ form_row(form.contenu)}}
+				{{ form_row(form.envoyer)}}
+				{{ form_end(form) }}
+			{% endif %}
+		</div>
 	</div>
-</div>{% endblock %}
+{% endblock %}
