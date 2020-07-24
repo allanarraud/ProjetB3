@@ -3,11 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Evenements;
+use App\Entity\Commentaires;
 use App\Form\EvenementType;
 use App\Repository\EvenementsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Form\EvenementType;
+use App\Form\CommentaireType;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
