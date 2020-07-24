@@ -43,6 +43,10 @@
 			margin: 0;
 			border-radius: 0;
 		}
+		.contenu p {
+			margin: 10px;
+			font-size: 90%;
+		}
 	</style>
 
 	<div class="main-wrapper">
@@ -51,6 +55,9 @@
 				<h2>{{evenement.titre}}
 					<a href="{{ path("evenement_modifier",{"id_evenement":evenement.id}) }}">
 						<i class="material-icons" title="Modifier">create</i>
+					</a>
+					<a href="{{ path("evenement_supprimer",{"id_evenement":evenement.id}) }}">
+						<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
 					</a>
 				</h2>
 			{% elseif app.user != evenement.compte %}

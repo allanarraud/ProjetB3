@@ -6,6 +6,7 @@ use App\Entity\Evenements;
 use App\Form\EvenementType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\ConfirmationSuppressionEvenementType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EvenementsController extends AbstractController
@@ -85,6 +86,35 @@ class EvenementsController extends AbstractController
             "form"=>$form->createView(),
             'evenement' => $evenement,
             "titre" => "Modification de l'évènement \"".$evenement->getTitre()."\"."
+        ]);
+    }
+
+    /**
+     * @Route("evenements/supprimer/{id_evenement}", name="evenement_supprimer")
+     */
+    public function supprimer($id_evenement, Request $request){
+
+        $evenementRepository = $this->getDoctrine()->getRepository(Evenements::class);
+        $evenement = $evenementRepository->Find($id_evenement);
+    
+        $form = $this->createForm(ConfirmationSuppressionEvenementType::class, $evenement);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evenement=$form->getData();
+
+            //Une connexion à la BDD par l'entity manager (em).
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($evenement);  
+            $em->flush();
+
+            return $this->redirectToRoute("liste_evenements");
+        }
+
+        return $this->render('evenements/confirmationSuppressionEvenement.html.twig', [
+            "form"=>$form->createView(),
+            "titre" => "Supprimer l'événement \"".$evenement->getTitre()."\" ?"
         ]);
     }
 

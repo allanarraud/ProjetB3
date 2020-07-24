@@ -22,6 +22,9 @@
 			-webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
 			-moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
 			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+			width: 100%;
+			max-width: 100%;
+			margin-bottom: 20px;
 		}
 		.evenement h2 {
 			margin-left: 10px;
@@ -30,7 +33,14 @@
 		.evenement p,
 		.evenement iframe {
 			margin-left: 10px;
+			margin-right: 10px;
 			border-style: none;
+			word-wrap: break-word;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3; /* number of lines to show */
+			-webkit-box-orient: vertical;
 		}
 		#organisateurEvenement {
 			position: relative;
@@ -38,10 +48,16 @@
 		}
 		.evenement a {
 			width: 100%;
+			max-width: 100%;
 			clear: both;
 			text-align: center;
 			margin: 0;
 			border-radius: 0;
+		}
+		.contenu p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-size: 90%;
 		}
 	</style>
 
@@ -52,6 +68,9 @@
 					<h2>{{evenement.titre}}
 						<a href="{{ path("evenement_modifier",{"id_evenement":evenement.id}) }}">
 							<i class="material-icons" title="Modifier">create</i>
+						</a>
+						<a href="{{ path("evenement_supprimer",{"id_evenement":evenement.id}) }}">
+							<i class="material-icons" style="color:crimson;" title="Supprimer">delete</i>
 						</a>
 					</h2>
 				{% elseif app.user != evenement.compte %}
@@ -83,6 +102,6 @@
 					<a href="{{path('evenement_details', {id_evenement: evenement.id})}}" class="btn btn-primary">Lire la suite</a>
 				</div>
 			</div>
-		</div>
-	{% endfor %}
-</div>{% endblock %}
+		{% endfor %}
+	</div>
+{% endblock %}
