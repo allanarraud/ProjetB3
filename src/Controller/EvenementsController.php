@@ -50,9 +50,9 @@ class EvenementsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $evenement = $form->getData();
-            $dateCommentaire = new \DateTime();
-            $dateCommentaire->setTimezone(new \DateTimeZone('Europe/Paris'));
-            $commentaire->setDateCommentaire($dateCommentaire);
+            $dateCreation = new \DateTime();
+            $dateCreation->setTimezone(new \DateTimeZone('Europe/Paris'));
+            $evenement->setDateCreation($dateCreation);
             $evenement->setCompte($user);
 
             //Une connexion à la BDD par l'entity manager (em).
