@@ -49,13 +49,13 @@ class Evenements
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="Evenements", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="Evenements", cascade={"persist", "remove"})
      */
     private $commentaires;
 
     /**
      * @ORM\ManyToOne(targetEntity=Compte::class, inversedBy="evenements")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $compte;
 
