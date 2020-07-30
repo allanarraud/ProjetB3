@@ -69,7 +69,7 @@ class Compte implements UserInterface
     private $banni = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Evenements::class, mappedBy="compte")
+     * @ORM\OneToMany(targetEntity=Evenements::class, mappedBy="compte", cascade={"persist", "remove"})
      */
     private $evenements;
 

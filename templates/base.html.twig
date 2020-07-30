@@ -10,6 +10,12 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
 	<body>
+		<style>
+			.material-icons {
+				display: inline-flex;
+				vertical-align: top;
+			}
+		</style>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="#">BalanceTonLive</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,8 +52,12 @@
 					{% if is_granted('ROLE_ADMIN') %}
 						<a class="nav-link" href="{{ path("admin") }}">Administration</a>
 					{% endif %}
-					<a class="nav-link" href="#">{{ app.user.username }}</a>
-					<a class="nav-link" href="{{ path("logout") }}">Se déconnecter</a>
+					<a class="nav-link" href="#">
+						<i class="material-icons">person</i>
+						{{ app.user.username }}</a>
+					<a class="nav-link" href="{{ path("logout") }}">
+						<i class="material-icons" title="Se déconnecter">power_settings_new</i>
+						Se déconnecter</a>
 				{% endif %}
 			</div>
 		</nav>
