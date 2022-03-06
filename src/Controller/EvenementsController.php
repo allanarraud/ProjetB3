@@ -65,7 +65,7 @@ class EvenementsController extends AbstractController
 
         return $this->render('evenements/formulaireAjoutEvenement.html.twig', [
             "form" => $form->createView(),
-            "titre" => "Création d'un évènement.",
+            "titre" => "Création d'un évènement",
         ]);
     }
 
